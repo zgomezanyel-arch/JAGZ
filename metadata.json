@@ -1,0 +1,6 @@
+{
+  "name": "CliniQuick - Notas Médicas Rápidas",
+  "description": "Sistema clínico ágil para el registro de notas médicas hospitalarias y de pase de visita: paciente, médico tratante, dieta, soluciones IV, diagnóstico, tratamiento y control de pendientes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

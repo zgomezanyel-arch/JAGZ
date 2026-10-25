@@ -1,0 +1,385 @@
+import { PatientNote } from '../types/patient';
+
+const today = new Date();
+const formatDateDaysAgo = (days: number) => {
+  const d = new Date(today);
+  d.setDate(d.getDate() - days);
+  return d.toISOString().slice(0, 10);
+};
+
+export const INITIAL_PATIENTS: PatientNote[] = [
+  {
+    id: 'pat-005',
+    fullName: 'Valeria Montserrat Gómez Ortiz',
+    age: 27,
+    ageUnit: 'años',
+    attendingPhysician: 'Dr. Hernán Castellanos (Gineco-Obstetricia)',
+    hasSecondDoctor: true,
+    coAttendingPhysician: 'Dra. Sofía Valenzuela (Neonatología / Pediatría)',
+    bed: 'Ginecología Cama 104',
+    service: 'Gineco-Obstetricia',
+    admissionDate: formatDateDaysAgo(1),
+    status: 'hospitalizado',
+    isPostpartum: true,
+    newborn: {
+      relationLabel: 'Hijo de Valeria Montserrat Gómez',
+      sex: 'masculino',
+      gestationalAgeMethod: 'Capurro',
+      gestationalWeeks: 39,
+      gestationalDays: 3,
+      weightGrams: 3340,
+      attendingPediatrician: 'Dra. Sofía Valenzuela (Pediatría/Neonatología)',
+      diagnosis: 'RNAT / AEG / Sano en alojamiento conjunto en seno materno exclusivo',
+      diet: 'Seno materno exclusivo a libre demanda',
+      apgar: '8/9',
+      silverman: 0,
+      notes: 'Vacunas BCG y Hepatitis B aplicadas. Primera micción y meconio positivos.',
+    },
+    diagnosis: 'Puerperio quirúrgico mediato (Cesárea tipo Kerr por DCP) + Alojamiento Conjunto (Binomio Madre-Hijo)',
+    diet: 'Dieta normal para madre lactante con abundantes líquidos (>2.5 L/día)',
+    ivSolutions: 'Solución Hartmann 1000 ml IV para 12 horas con Oxitocina 20 UI (83 ml/h)',
+    surveillance: 'Madre: sangrado transvaginal (loquios hemáticos moderados), globo de seguridad de Pinard y herida quirúrgica. RN: coloración, succión vigorosa y termorregulación.',
+    treatment: `1. Paracetamol 1 g VO cada 8 horas
+2. Ketorolaco 30 mg IV cada 8 horas (últimas 24h)
+3. Cefazolina 1 g IV cada 8 horas (profilaxis)
+4. Omeprazol 40 mg IV cada 24 horas
+5. Fomentar lactancia materna exclusiva y deambulación asistida`,
+    pendingTasks: [
+      {
+        id: 'pend-501',
+        text: 'Retiro de sonda Foley y evaluar uresis espontánea',
+        category: 'procedimiento',
+        priority: 'alta',
+        completed: true,
+      },
+      {
+        id: 'pend-502',
+        text: 'Pase de visita y valoración del recién nacido por Dra. Valenzuela (Pediatra)',
+        category: 'interconsulta',
+        priority: 'alta',
+        completed: false,
+      },
+      {
+        id: 'pend-503',
+        text: 'Tamiz metabólico neonatal al cumplir 48 horas de vida',
+        category: 'laboratorio',
+        priority: 'media',
+        completed: false,
+      },
+      {
+        id: 'pend-504',
+        text: 'Entrega de cartilla de vacunación y certificado de nacimiento al alta',
+        category: 'general',
+        priority: 'baja',
+        completed: false,
+      },
+    ],
+    vitals: {
+      ta: '115/70',
+      fc: 74,
+      fr: 17,
+      temp: 36.6,
+      spo2: 98,
+      dextro: 96,
+    },
+    allergies: 'Negadas',
+    notes: 'Involución uterina adecuada a 2 cm debajo de cicatriz umbilical. Buen agarre al seno materno en alojamiento conjunto.',
+    createdAt: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 3600 * 1000).toISOString(),
+  },
+  {
+    id: 'pat-001',
+    fullName: 'María Elena Sánchez Rivera',
+    age: 48,
+    ageUnit: 'años',
+    attendingPhysician: 'Dra. Gabriela Vega (Medicina Interna)',
+    bed: 'Cama 304-A',
+    service: 'Medicina Interna',
+    admissionDate: formatDateDaysAgo(3),
+    status: 'hospitalizado',
+    diagnosis: 'Neumonía adquirida en la comunidad (NAC) moderada (CURB-65: 1) + Diabetes Mellitus tipo 2 compensada',
+    diet: 'Dieta para diabético (1500 kcal) fraccionada en 3 tercios, baja en sodio',
+    ivSolutions: 'Solución Fisiológica 0.9% 1000 ml IV para 12 horas (83 ml/h)',
+    surveillance: 'Vigilar desaturación (SpO2 <92%), taquipnea >22 rpm y pico febril ≥38.0°C para toma de hemocultivos',
+    treatment: `1. Ceftriaxona 1 g IV cada 12 horas (Día 3 de 7)
+2. Claritromicina 500 mg VO cada 12 horas (Día 3)
+3. Omeprazol 40 mg IV cada 24 horas por la mañana
+4. Paracetamol 1 g IV cada 8 horas PRN temperatura >38.0°C o dolor EVA >4
+5. Enoxaparina 40 mg SC cada 24 horas (profilaxis TVP)
+6. Insulina Lispro según escala móvil de glucemia capilar antes de cada alimento`,
+    pendingTasks: [
+      {
+        id: 'pend-101',
+        text: 'BHC de control matutino a las 06:00 para valorar curva de leucocitosis',
+        category: 'laboratorio',
+        priority: 'alta',
+        completed: false,
+      },
+      {
+        id: 'pend-102',
+        text: 'Gasometría arterial si persiste taquipnea o SpO2 <92%',
+        category: 'laboratorio',
+        priority: 'media',
+        completed: false,
+      },
+      {
+        id: 'pend-103',
+        text: 'Valorar retiro progresivo de puntas nasales a 2 L/min',
+        category: 'procedimiento',
+        priority: 'media',
+        completed: true,
+      },
+      {
+        id: 'pend-104',
+        text: 'Interconsulta a Nutrición Clínica para plan de egreso',
+        category: 'interconsulta',
+        priority: 'baja',
+        completed: false,
+      },
+    ],
+    vitals: {
+      ta: '125/82',
+      fc: 84,
+      fr: 19,
+      temp: 36.8,
+      spo2: 95,
+      dextro: 138,
+    },
+    allergies: 'Penicilina (urticaria en infancia)',
+    notes: 'Paciente afebril en las últimas 24 hrs. Murmullo vesicular con crepitantes basales en disminución. Buena tolerancia oral.',
+    createdAt: new Date(Date.now() - 36 * 3600 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+  },
+  {
+    id: 'pat-002',
+    fullName: 'Jorge Alberto Rivas Morales',
+    age: 26,
+    ageUnit: 'años',
+    attendingPhysician: 'Dr. Alejandro Montes (Cirugía General)',
+    bed: 'Cama 210-B',
+    service: 'Cirugía General',
+    admissionDate: formatDateDaysAgo(1),
+    status: 'quirurgico',
+    diagnosis: 'Postoperado de Apendicectomía laparoscópica por apendicitis aguda fase III (purulenta) - Día 1',
+    diet: 'Líquidos claros a tolerancia (100 ml cada 2 horas), si tolera progresar a dieta blanda por la tarde',
+    ivSolutions: 'Solución Hartmann 1000 ml IV para 8 horas alternada con Solución Fisiológica 0.9% 1000 ml (125 ml/h)',
+    infusions: 'Fentanilo 1000 mcg en 100 cc Solución Fisiológica 0.9% a 4 cc/h titular (EVA meta <3)',
+    surveillance: 'Vigilar sangrado en puertos laparoscópicos, náuseas/vómitos postoperatorios y presencia de peristalsis',
+    treatment: `1. Ceftriaxona 1 g IV cada 12 horas
+2. Metronidazol 500 mg IV cada 8 horas
+3. Ketorolaco 30 mg IV cada 8 horas por 48 horas máximo
+4. Tramadol 50 mg IV diluido en 100 ml salina PRN dolor intenso EVA >7
+5. Metoclopramida 10 mg IV cada 8 horas
+6. Omeprazol 40 mg IV cada 24 horas`,
+    pendingTasks: [
+      {
+        id: 'pend-201',
+        text: 'Vigilar sangrado en puertos laparoscópicos y evaluar peristalsis',
+        category: 'procedimiento',
+        priority: 'alta',
+        completed: true,
+      },
+      {
+        id: 'pend-202',
+        text: 'Deambulación temprana asistida en pasillo con apoyo de enfermería',
+        category: 'general',
+        priority: 'media',
+        completed: false,
+      },
+      {
+        id: 'pend-203',
+        text: 'BHC y tiempos de control a las 18:00 hrs',
+        category: 'laboratorio',
+        priority: 'alta',
+        completed: false,
+      },
+    ],
+    vitals: {
+      ta: '118/74',
+      fc: 76,
+      fr: 16,
+      temp: 36.6,
+      spo2: 98,
+      dextro: 94,
+    },
+    allergies: 'Negadas',
+    notes: 'Heridas limpias, ruidos peristálticos presentes, deambula con apoyo leve.',
+    createdAt: new Date(Date.now() - 20 * 3600 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 3600 * 1000).toISOString(),
+  },
+  {
+    id: 'pat-003',
+    fullName: 'Carmen Sofía Mendoza Téllez',
+    age: 62,
+    ageUnit: 'años',
+    attendingPhysician: 'Dr. Roberto Carrillo (Urgencias / Terapia)',
+    bed: 'Observación Urgencias Cama 04',
+    service: 'Urgencias',
+    admissionDate: formatDateDaysAgo(0),
+    status: 'observacion',
+    diagnosis: 'Pielonefritis aguda complicada con choque séptico en resolución + Deshidratación moderada',
+    diet: 'Ayuno estricto (NPO) por náusea persistente y vómito',
+    ivSolutions: 'Solución Fisiológica 0.9% 1000 ml IV en bolo de 500 ml, posteriormente infusión a 125 ml/h',
+    infusions: 'Norepinefrina 8 mg en 100 cc de Dextrosa al 5% a 10 cc/h titular (meta PAM ≥65 mmHg)',
+    surveillance: 'Vigilar presión arterial media (PAM <65 mmHg avisar a residente), uresis horaria <30 ml/h y dolor lumbar',
+    treatment: `1. Meropenem 1 g IV cada 8 horas (previo urocultivo)
+2. Ondansetrón 8 mg IV cada 8 horas lento en 15 min
+3. Paracetamol 1 g IV en infusión corta cada 8 horas
+4. Butilhioscina 20 mg IV cada 8 horas PRN dolor lumbar intenso
+5. Omeprazol 40 mg IV cada 24 horas`,
+    pendingTasks: [
+      {
+        id: 'pend-301',
+        text: 'Resultado de Urocultivo con antibiograma tomado en admisión',
+        category: 'laboratorio',
+        priority: 'alta',
+        completed: false,
+      },
+      {
+        id: 'pend-302',
+        text: 'Ultrasonido renal y de vías urinarias para descartar litiasis obstructiva',
+        category: 'imagen',
+        priority: 'alta',
+        completed: false,
+      },
+      {
+        id: 'pend-303',
+        text: 'Monitoreo estricto de diuresis horaria (meta >0.5 ml/kg/h)',
+        category: 'procedimiento',
+        priority: 'alta',
+        completed: true,
+      },
+      {
+        id: 'pend-304',
+        text: 'Solicitar cama de hospitalización en piso de Medicina Interna',
+        category: 'general',
+        priority: 'media',
+        completed: false,
+      },
+    ],
+    vitals: {
+      ta: '105/65',
+      fc: 98,
+      fr: 20,
+      temp: 38.2,
+      spo2: 96,
+      dextro: 112,
+    },
+    allergies: 'Sulfamidas / Trimetoprima',
+    notes: 'Giordano bilateral positivo. Sonda Foley a derivación con gasto adecuado.',
+    createdAt: new Date(Date.now() - 8 * 3600 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'pat-004',
+    fullName: 'Mateo Emiliano López Cruz',
+    age: 7,
+    ageUnit: 'años',
+    attendingPhysician: 'Dra. Claudia Benítez (Pediatría)',
+    bed: 'Pediatría Cama 12',
+    service: 'Pediatría',
+    admissionDate: formatDateDaysAgo(2),
+    status: 'hospitalizado',
+    diagnosis: 'Gastroenteritis aguda con deshidratación grado II corregida + Intolerancia a la vía oral en remisión',
+    diet: 'Dieta astringente fraccionada + Vida Suero Oral a libre demanda',
+    ivSolutions: 'Solución Glucosada 5% 500 ml con Electrólitos (Peditrol / KCl 10 mEq) para 8 horas (62.5 ml/h)',
+    surveillance: 'Vigilar recurrencia de evacuaciones líquidas (>3 en 4 horas), vómitos postprandiales o llanto sin lágrimas',
+    treatment: `1. Racecadotrilo 30 mg VO cada 8 horas (sobre disuelto en agua)
+2. Ondansetrón 2 mg IV dosis única si reinicia vómito
+3. Paracetamol solución oral 250 mg (10 ml) cada 6 horas PRN temperatura >38°C
+4. Probióticos (Lactobacillus reuteri) 5 gotas cada 24 horas por 10 días`,
+    pendingTasks: [
+      {
+        id: 'pend-401',
+        text: 'Vigilar tolerancia al suero oral en pequeños sorbos cada 15 min',
+        category: 'procedimiento',
+        priority: 'alta',
+        completed: true,
+      },
+      {
+        id: 'pend-402',
+        text: 'Coprológico y examen general de orina recolectado',
+        category: 'laboratorio',
+        priority: 'media',
+        completed: true,
+      },
+      {
+        id: 'pend-403',
+        text: 'Valorar retiro de venoclisis si tolera 2 tomas completas de alimentos',
+        category: 'procedimiento',
+        priority: 'alta',
+        completed: false,
+      },
+    ],
+    vitals: {
+      ta: '95/60',
+      fc: 92,
+      fr: 22,
+      temp: 36.5,
+      spo2: 99,
+      dextro: 88,
+    },
+    allergies: 'Ninguna conocida',
+    notes: 'Paciente reactivo, tolera sorbos de suero, mucosa húmeda.',
+    createdAt: new Date(Date.now() - 16 * 3600 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'pat-006',
+    fullName: 'Fernando Navarro Estrada',
+    age: 54,
+    ageUnit: 'años',
+    attendingPhysician: 'Dr. Leonardo Cisneros (Urología)',
+    hasSecondDoctor: true,
+    coAttendingPhysician: 'Dra. Gabriela Vega (Nefrología / Interconsulta)',
+    bed: 'Cama 412',
+    service: 'Urología',
+    customService: 'Urología',
+    admissionDate: formatDateDaysAgo(2),
+    status: 'hospitalizado',
+    diagnosis: 'Urolitiasis obstructiva ureteral distal derecha + Hidronefrosis grado II + Injuria renal aguda prerrenal corregida',
+    diet: 'Dieta normal con hidratación oral abundante (>3 litros/día)',
+    ivSolutions: 'Solución Fisiológica 0.9% 1000 ml IV para 12 horas (83 ml/h)',
+    surveillance: 'Vigilar gasto urinario horario (avisar si uresis <40 ml/h o anuria), hematuria franca macroscópica y pico febril',
+    treatment: `1. Tamsulosina 0.4 mg VO cada 24 horas por las noches
+2. Ketorolaco 30 mg IV cada 8 horas PRN cólico nefrítico
+3. Ciprofloxacino 400 mg IV cada 12 horas
+4. Paracetamol 1 g IV cada 8 horas
+5. Colador urinario en cada micción para recuperación de lito`,
+    pendingTasks: [
+      {
+        id: 'pend-601',
+        text: 'Tomografía computarizada simple de abdomen y pelvis (UROTAC) de control',
+        category: 'imagen',
+        priority: 'alta',
+        completed: false,
+      },
+      {
+        id: 'pend-602',
+        text: 'Creatinina y electrolitos séricos matutinos para control nefrológico',
+        category: 'laboratorio',
+        priority: 'alta',
+        completed: true,
+      },
+      {
+        id: 'pend-603',
+        text: 'Programar colocación de catéter ureteral doble J si lito no progresa en 24h',
+        category: 'procedimiento',
+        priority: 'media',
+        completed: false,
+      },
+    ],
+    vitals: {
+      ta: '128/82',
+      fc: 76,
+      fr: 16,
+      temp: 36.7,
+      spo2: 98,
+      dextro: 104,
+    },
+    allergies: 'Negadas',
+    notes: 'Dolor cólico controlado con analgesia reglada. Uresis clara sin coágulos.',
+    createdAt: new Date(Date.now() - 36 * 3600 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+  },
+];
